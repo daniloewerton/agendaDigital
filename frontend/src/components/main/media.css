@@ -1,0 +1,17 @@
+
+/*Desktop layout*/
+
+@media screen and (min-width: 64rem) {
+    .container__form {
+        width: 35%;
+    }
+}
+
+/*Tablet layout*/
+
+@media screen and (min-width: 48rem) and (max-width: 63.9375rem) {
+    .container__form {
+        width: 60%;
+    }
+}
+

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="utf-8">
+        <title>Editar Contatos</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400&family=Nunito+Sans:wght@300&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="css/estilos.css">
+        <link rel="stylesheet" href="css/reset.css">
+    </head>
+    <body>
+        <header class="header">
+            <a href="#" class="header__text">Agenda Online</a>
+        </header>
+        <main class="container">
+            <section class="container__form">
+                <form class="container__box" action="" method="post">
+                    <h1 class="container__titulo">Contatos</h1>
+                    <div class="form-group">
+                        <label class="form_label" for="exampleInputEmail1">Nome</label>
+                        <input class="form_input" type="hidden" name="id" id="id" value="${contato.id}">
+                        <input class="form_input" type="text" class="form-control" placeholder="Seu nome" name="nome">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form_label" for="exampleInputEmail1">RG</label>
+                        <input class="form_input" type="number" class="form-control" placeholder="Seu RG" name="rg">
+                    </div>
+                    <div class="form-group">
+                        <label class="form_label" for="exampleInputEmail1">CPF</label>
+                        <input class="form_input" type="number" class="form-control" placeholder="Seu CPF" name="cpf">
+                    </div>
+                    <div class="box_botao">
+                        <button type="submit" class="botao">Atualizar</button>
+                    </div>
+                </form>
+            </section>
+            
+        </main>
+      
+
+    </body>
+</html>
