@@ -10,7 +10,7 @@ import javax.persistence.Table;
 @Table(name = "tb_endereco")
 public class Endereco {
 
-	private static int idCount;
+	//private static int idCount;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -23,7 +23,15 @@ public class Endereco {
 	private String uf;
 
 	public Endereco() {
-		idCount++;
+		//idCount++;
+	}
+	
+	public int getId() {
+		return id;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getRua() {
@@ -82,11 +90,11 @@ public class Endereco {
 		this.uf = unidadeFederativa;
 	}
 
-	public int getId() {
-		return id;
+	public String getUf() {
+		return uf;
 	}
 
-	public void setId() {
-		this.id = idCount;
+	public void setUf(String uf) {
+		this.uf = uf;
 	}
 }

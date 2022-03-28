@@ -13,11 +13,19 @@ import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "tb_usuario")
-public class Usuario extends Pessoa implements dadosCadastrais {
+public class Usuario {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@Column(nullable = false)
+	@NotBlank
+	private String nome;
+
+	@Column(nullable = false)
+	@NotBlank
+	private String sobrenome;
 
 	@Column(nullable = false)
 	@NotBlank
@@ -27,7 +35,7 @@ public class Usuario extends Pessoa implements dadosCadastrais {
 	@NotBlank
 	private String senha;
 
-	@OneToMany(mappedBy = "usuario")
+	@OneToMany (mappedBy = "usuario")
 	private List<Contato> contato;
 
 	public Usuario() {
@@ -57,22 +65,18 @@ public class Usuario extends Pessoa implements dadosCadastrais {
 		this.sobrenome = sobrenome;
 	}
 
-	@Override
 	public String getEmail() {
 		return email;
 	}
 
-	@Override
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
-	@Override
 	public String getSenha() {
 		return senha;
 	}
 
-	@Override
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
@@ -83,5 +87,13 @@ public class Usuario extends Pessoa implements dadosCadastrais {
 
 	public void setContato(List<Contato> contato) {
 		this.contato = contato;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 }

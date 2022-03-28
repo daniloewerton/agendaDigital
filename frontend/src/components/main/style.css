@@ -57,36 +57,6 @@
     font-size: 1.5em;
 }
 
-.box_botao {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.botao {
-    background-color: #343a40;
-    color: white;
-    font-size: 1.25em;
-    border-radius: 0.25em;
-    cursor: pointer;
-    border: 0;
-    height: 50px;
-    width: 50%;
-}
-
-.botao:hover {
-    background-color: #212529;
-}
-
-.botao_link {
-    text-decoration: none;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-left: 0.625em;
-}
-
 .assinatura {
     text-align: center;
     font-size: 1em;

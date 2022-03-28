@@ -13,14 +13,20 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "tb_contatos")
-public class Contato extends Pessoa {
-
-	private static Long idCount = 0L;
+@Table(name = "tb_contatos", schema = "agendaDigital")
+public class Contato {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	private String nome;
+
+	private String sobrenome;
+
+	private String rg;
+
+	private String cpf;
 
 	@ManyToOne
 	private Usuario usuario;
@@ -30,7 +36,7 @@ public class Contato extends Pessoa {
 	List<Endereco> enderecoContato = new ArrayList<>();
 
 	public Contato() {
-		idCount++;
+
 	}
 
 	public Contato(String nome, String sobrenome, String rg, String cpf, List<Endereco> endereco) {
@@ -45,18 +51,40 @@ public class Contato extends Pessoa {
 		return this.id;
 	}
 
-	public void setId() {
-		this.id = idCount;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
-	@Override
 	public String getNome() {
 		return this.nome;
 	}
 
-	@Override
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public String getSobrenome() {
+		return sobrenome;
+	}
+
+	public void setSobrenome(String sobrenome) {
+		this.sobrenome = sobrenome;
+	}
+
+	public String getRg() {
+		return rg;
+	}
+
+	public void setRg(String rg) {
+		this.rg = rg;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
 	}
 
 	public List<Endereco> getEndereco() {

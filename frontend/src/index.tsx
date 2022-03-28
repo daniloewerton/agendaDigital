@@ -7,7 +7,7 @@ import MainContainer from './components/main';
 ReactDOM.render(
   <React.StrictMode>
     <App />
-    <MainContainer></MainContainer>
+    <MainContainer />
     
   </React.StrictMode>,
   document.getElementById('root')
