@@ -24,7 +24,7 @@ public class UsuarioController {
 	@Autowired
 	private UsuarioRepository repositorio;
 
-	@PostMapping("/registrarUsuario")
+	@PostMapping(path = "/registrarUsuario")
 	public Usuario registrarUsuario(@Valid @RequestBody Usuario user) {		
 		repositorio.save(user);
 		return user;

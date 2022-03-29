@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "tb_contatos", schema = "agendaDigital")
@@ -28,7 +29,9 @@ public class Contato {
 
 	private String cpf;
 
+	@NotNull
 	@ManyToOne
+	@JoinColumn(name = "usuario_id")
 	private Usuario usuario;
 
 	@OneToMany

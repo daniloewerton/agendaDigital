@@ -1,13 +1,10 @@
 package br.com.dwtecnologia.agendadigital.model;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
@@ -34,9 +31,6 @@ public class Usuario {
 	@Column(nullable = false)
 	@NotBlank
 	private String senha;
-
-	@OneToMany (mappedBy = "usuario")
-	private List<Contato> contato;
 
 	public Usuario() {
 
@@ -79,14 +73,6 @@ public class Usuario {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
-	}
-
-	public List<Contato> getContato() {
-		return contato;
-	}
-
-	public void setContato(List<Contato> contato) {
-		this.contato = contato;
 	}
 
 	public Long getId() {
