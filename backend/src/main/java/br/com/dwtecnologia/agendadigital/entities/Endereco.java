@@ -1,16 +1,18 @@
-package br.com.dwtecnologia.agendadigital.model;
+package br.com.dwtecnologia.agendadigital.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "tb_endereco")
 public class Endereco {
 
-	//private static int idCount;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -18,12 +20,17 @@ public class Endereco {
 	private int numero;
 	private String complemento;
 	private String bairro;
-	private int cep;
+	private String cep;
 	private String cidade;
 	private String uf;
+	
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "contato_id")
+	private Contato contato;
 
 	public Endereco() {
-		//idCount++;
+
 	}
 	
 	public int getId() {
@@ -66,11 +73,11 @@ public class Endereco {
 		this.bairro = bairro;
 	}
 
-	public int getCep() {
+	public String getCep() {
 		return cep;
 	}
 
-	public void setCep(int cep) {
+	public void setCep(String cep) {
 		this.cep = cep;
 	}
 
@@ -96,5 +103,13 @@ public class Endereco {
 
 	public void setUf(String uf) {
 		this.uf = uf;
+	}
+
+	public Contato getContato() {
+		return contato;
+	}
+
+	public void setContato(Contato contato) {
+		this.contato = contato;
 	}
 }

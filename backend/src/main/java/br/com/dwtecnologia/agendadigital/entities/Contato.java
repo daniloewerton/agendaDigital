@@ -1,7 +1,4 @@
-package br.com.dwtecnologia.agendadigital.model;
-
-import java.util.ArrayList;
-import java.util.List;
+package br.com.dwtecnologia.agendadigital.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,7 +6,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -34,20 +30,15 @@ public class Contato {
 	@JoinColumn(name = "usuario_id")
 	private Usuario usuario;
 
-	@OneToMany
-	@JoinColumn
-	List<Endereco> enderecoContato = new ArrayList<>();
-
 	public Contato() {
 
 	}
 
-	public Contato(String nome, String sobrenome, String rg, String cpf, List<Endereco> endereco) {
+	public Contato(String nome, String sobrenome, String rg, String cpf) {
 		this.nome = nome;
 		this.sobrenome = sobrenome;
 		this.rg = rg;
 		this.cpf = cpf;
-		this.enderecoContato = endereco;
 	}
 
 	public Long getId() {
@@ -88,22 +79,6 @@ public class Contato {
 
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
-	}
-
-	public List<Endereco> getEndereco() {
-		return enderecoContato;
-	}
-
-	public void setEndereco(Endereco endereco) {
-		this.enderecoContato.add(endereco);
-	}
-
-	public List<Endereco> getEnderecoContato() {
-		return enderecoContato;
-	}
-
-	public void setEnderecoContato(List<Endereco> enderecoContato) {
-		this.enderecoContato = enderecoContato;
 	}
 
 	public Usuario getUsuario() {

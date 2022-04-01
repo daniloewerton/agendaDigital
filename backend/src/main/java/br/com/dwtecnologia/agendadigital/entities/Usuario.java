@@ -1,4 +1,4 @@
-package br.com.dwtecnologia.agendadigital.model;
+package br.com.dwtecnologia.agendadigital.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

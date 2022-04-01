@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.dwtecnologia.agendadigital.model.Contato;
+import br.com.dwtecnologia.agendadigital.entities.Contato;
 import br.com.dwtecnologia.agendadigital.repositories.ContatoRepository;
 
 @RestController

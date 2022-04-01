@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import br.com.dwtecnologia.agendadigital.model.Usuario;
+import br.com.dwtecnologia.agendadigital.entities.Usuario;
 import br.com.dwtecnologia.agendadigital.repositories.UsuarioRepository;
 
 @Controller
