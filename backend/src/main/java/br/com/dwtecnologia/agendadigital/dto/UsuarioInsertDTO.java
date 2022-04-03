@@ -58,7 +58,4 @@ public class UsuarioInsertDTO {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
-	
-	
-
 }

@@ -19,15 +19,11 @@ import br.com.dwtecnologia.agendadigital.dto.UsuarioDTO;
 import br.com.dwtecnologia.agendadigital.dto.UsuarioInsertDTO;
 import br.com.dwtecnologia.agendadigital.entities.Usuario;
 import br.com.dwtecnologia.agendadigital.exception.ServiceException;
-import br.com.dwtecnologia.agendadigital.repositories.UsuarioRepository;
 import br.com.dwtecnologia.agendadigital.services.UsuarioService;
 
 @RestController
 @RequestMapping("/usuario")
 public class UsuarioController {
-
-	@Autowired
-	private UsuarioRepository repositorio;
 
 	@Autowired
 	private UsuarioService usuarioService;
@@ -48,16 +44,18 @@ public class UsuarioController {
 		return usuario;
 	}
 
-	// FALTA ISOLAR NO SERVICE
-	
 	@PutMapping("/atualizarUsuario")
-	public Usuario atualizarUsuario(Usuario usuario) {
-		repositorio.save(usuario);
-		return usuario;
+	public ResponseEntity<UsuarioDTO> atualizarUsuario(Usuario usuario) {
+		try {
+			UsuarioDTO user = usuarioService.atualizarUsuario(usuario);
+			return ResponseEntity.ok(user);
+		} catch (ServiceException e) {
+			return ResponseEntity.unprocessableEntity().build();
+		}
 	}
 
 	@DeleteMapping("/removerUsuario/{id}")
 	public void removeUsuario(@PathVariable Long id) {
-		repositorio.deleteById(id);
+		usuarioService.removerUsuario(id);
 	}
 }

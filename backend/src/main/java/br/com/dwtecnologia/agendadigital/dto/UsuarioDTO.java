@@ -12,6 +12,11 @@ public class UsuarioDTO {
 
 	private String email;
 
+	
+	public UsuarioDTO() {
+		
+	}
+	
 	public UsuarioDTO(Long id, String nome, String sobrenome, String email) {
 		super();
 		this.id = id;
@@ -58,5 +63,4 @@ public class UsuarioDTO {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
 }
