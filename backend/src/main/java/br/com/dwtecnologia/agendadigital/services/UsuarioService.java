@@ -39,8 +39,8 @@ public class UsuarioService {
 	}
 
 	public List<UsuarioDTO> listaUsuario() {
-		List<Usuario> list = repositorio.findAll();
-		return list.stream().map(u -> new UsuarioDTO(u)).collect(Collectors.toList());
+		List<Usuario> usuarios = repositorio.findAll();
+		return usuarios.stream().map(u -> new UsuarioDTO(u)).collect(Collectors.toList());
 	}
 
 	public UsuarioDTO atualizarUsuario(Usuario usuario) {

@@ -1,11 +1,14 @@
 package br.com.dwtecnologia.agendadigital.entities;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -21,9 +24,11 @@ public class Contato {
 
 	private String sobrenome;
 
-	private String rg;
-
-	private String cpf;
+	private String email;
+	
+	@OneToMany
+	@JoinColumn(name = "id_contato")
+	List<Numero> numeros;
 
 	@NotNull
 	@ManyToOne
@@ -34,11 +39,12 @@ public class Contato {
 
 	}
 
-	public Contato(String nome, String sobrenome, String rg, String cpf) {
+	public Contato(String nome, String sobrenome, String email, List<Numero> numeros, Usuario usuario) {
 		this.nome = nome;
 		this.sobrenome = sobrenome;
-		this.rg = rg;
-		this.cpf = cpf;
+		this.email = email;
+		this.numeros = numeros;
+		this.usuario = usuario;
 	}
 
 	public Long getId() {
@@ -65,27 +71,27 @@ public class Contato {
 		this.sobrenome = sobrenome;
 	}
 
-	public String getRg() {
-		return rg;
-	}
-
-	public void setRg(String rg) {
-		this.rg = rg;
-	}
-
-	public String getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
-
 	public Usuario getUsuario() {
 		return usuario;
 	}
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public List<Numero> getNumeros() {
+		return numeros;
+	}
+
+	public void setNumeros(List<Numero> numeros) {
+		this.numeros = numeros;
 	}
 }

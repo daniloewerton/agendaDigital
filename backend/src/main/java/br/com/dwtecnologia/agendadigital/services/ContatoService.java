@@ -1,0 +1,93 @@
+package br.com.dwtecnologia.agendadigital.services;
+
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import br.com.dwtecnologia.agendadigital.dto.ContatoDTO;
+import br.com.dwtecnologia.agendadigital.entities.Contato;
+import br.com.dwtecnologia.agendadigital.exception.ServiceException;
+import br.com.dwtecnologia.agendadigital.repositories.ContatoRepository;
+
+@Service
+public class ContatoService {
+
+	@Autowired
+	private ContatoRepository repositorio;
+
+	public Contato registrarContato(Contato contato) {
+
+		Contato cont = retornaContato(contato);
+
+		if (cont == null) {
+			repositorio.save(contato);
+		} else {
+			throw new ServiceException("Contato já existe!");
+		}
+		return contato;
+	}
+
+	public List<ContatoDTO> consultarContatos() {
+		List<Contato> contatos = repositorio.findAll();
+		return contatos.stream().map(c -> new ContatoDTO(c)).collect(Collectors.toList());
+	}
+
+	public void removerContato(Long id) {
+
+		Contato contato = retornaContato(id);
+
+		if (contato != null) {
+			repositorio.delete(contato);
+		} else {
+			throw new ServiceException("Contato não existe!");
+		}
+	}
+
+	public ContatoDTO atualizarContato(Contato contato) {
+
+		Contato cont = retornaContato(contato);
+
+		if (cont == null) {
+			throw new ServiceException("Contato não existe!");
+		} else {
+
+			Contato contatoAtualizado = new Contato();
+			contatoAtualizado.setId(contato.getId());
+			contatoAtualizado.setNome(contato.getNome());
+			contatoAtualizado.setEmail(contato.getEmail());
+			contatoAtualizado.setSobrenome(contato.getSobrenome());
+			contatoAtualizado.setNumeros(contato.getNumeros());
+			contatoAtualizado.setUsuario(contato.getUsuario());
+
+			ContatoDTO contatodto = new ContatoDTO(contatoAtualizado);
+
+			repositorio.save(contatoAtualizado);
+
+			return contatodto;
+
+		}
+	}
+
+	public Contato retornaContato(Contato contato) {
+		Contato contatoBanco;
+		try {
+			contatoBanco = repositorio.findById(contato.getId()).get();
+		} catch (Exception exception) {
+			contatoBanco = null;
+		}
+		return contatoBanco;
+	}
+
+	public Contato retornaContato(Long id) {
+		Contato contatoBanco;
+		try {
+			contatoBanco = repositorio.findById(id).get();
+		} catch (NoSuchElementException exception) {
+			contatoBanco = null;
+		}
+		return contatoBanco;
+	}
+}

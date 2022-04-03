@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,36 +15,46 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.dwtecnologia.agendadigital.dto.ContatoDTO;
 import br.com.dwtecnologia.agendadigital.entities.Contato;
-import br.com.dwtecnologia.agendadigital.repositories.ContatoRepository;
+import br.com.dwtecnologia.agendadigital.exception.ServiceException;
+import br.com.dwtecnologia.agendadigital.services.ContatoService;
 
 @RestController
 @RequestMapping("/contatos")
 public class ContatoController {
 
 	@Autowired
-	private ContatoRepository repositorio;
+	private ContatoService contatoService;
 
 	@PostMapping("/registrarContato")
-	public Contato registrarContato(@Valid @RequestBody Contato contato) {
-		repositorio.save(contato);
-		return contato;
+	public ResponseEntity<Contato> registrarContato(@Valid @RequestBody Contato contato) {
+		try {
+			contatoService.registrarContato(contato);
+			return ResponseEntity.ok(contato);
+		} catch (ServiceException e) {
+			return ResponseEntity.unprocessableEntity().build();
+		}
 	}
-	
+
 	@GetMapping("/consultarContato")
-	public List<Contato> consultarContato() {
-		List<Contato> contatos = repositorio.findAll();
+	public List<ContatoDTO> consultarContato() {
+		List<ContatoDTO> contatos = contatoService.consultarContatos();
 		return contatos;
+	}
+
+	@PutMapping("/atualizarContato")
+	public ResponseEntity<ContatoDTO> atualizarContato(Contato contato) {
+		try {
+			ContatoDTO cont = contatoService.atualizarContato(contato);
+			return ResponseEntity.ok(cont);
+		} catch (ServiceException e) {
+			return ResponseEntity.unprocessableEntity().build();
+		}
 	}
 
 	@DeleteMapping("/removerContato/{id}")
 	public void removerContato(@PathVariable Long id) {
-		repositorio.deleteById(id);
-	}
-	
-	@PutMapping("/atualizarContato")
-	public Contato atualizarContato(Contato contato) {
-		repositorio.save(contato);
-		return contato;
+		contatoService.removerContato(id);
 	}
 }
