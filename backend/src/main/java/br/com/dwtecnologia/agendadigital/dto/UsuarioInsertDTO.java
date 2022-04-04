@@ -16,7 +16,7 @@ public class UsuarioInsertDTO {
 		this.nome = usuario.getNome();
 		this.sobrenome = usuario.getSobrenome();
 		this.email = usuario.getEmail();
-		this.email = usuario.getSenha();
+		this.senha = usuario.getSenha();
 	}
 	
 	public UsuarioInsertDTO(String nome, String sobrenome, String email, String senha) {

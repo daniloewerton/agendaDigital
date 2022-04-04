@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,33 +29,42 @@ public class ContatoController {
 	private ContatoService contatoService;
 
 	@PostMapping("/registrarContato")
-	public ResponseEntity<Contato> registrarContato(@Valid @RequestBody Contato contato) {
+	public ResponseEntity<Object> registrarContato(@Valid @RequestBody Contato contato) {
 		try {
 			contatoService.registrarContato(contato);
-			return ResponseEntity.ok(contato);
-		} catch (ServiceException e) {
-			return ResponseEntity.unprocessableEntity().build();
+			return ResponseEntity.status(HttpStatus.OK).body(contato);
+		} catch (ServiceException exception) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
 		}
 	}
 
 	@GetMapping("/consultarContato")
-	public List<ContatoDTO> consultarContato() {
+	public ResponseEntity<Object> consultarContato() {
 		List<ContatoDTO> contatos = contatoService.consultarContatos();
-		return contatos;
+
+		if (contatos.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Nenhum contato cadastrado");
+		}
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(contatos);
 	}
 
-	@PutMapping("/atualizarContato")
-	public ResponseEntity<ContatoDTO> atualizarContato(Contato contato) {
+	@PutMapping("/atualizarContato/{id}")
+	public ResponseEntity<Object> atualizarContato(@RequestBody Contato contato, @PathVariable Long id) {
 		try {
 			ContatoDTO cont = contatoService.atualizarContato(contato);
-			return ResponseEntity.ok(cont);
-		} catch (ServiceException e) {
-			return ResponseEntity.unprocessableEntity().build();
+			return ResponseEntity.status(HttpStatus.OK).body(cont);
+		} catch (ServiceException exception) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
 		}
 	}
 
 	@DeleteMapping("/removerContato/{id}")
-	public void removerContato(@PathVariable Long id) {
-		contatoService.removerContato(id);
+	public ResponseEntity<Object> removerContato(@PathVariable Long id) {
+		try {
+			contatoService.removerContato(id);
+			return ResponseEntity.status(HttpStatus.OK).body("Contato removido!");
+		} catch (ServiceException exception) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
+		}
 	}
 }

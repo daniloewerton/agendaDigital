@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -62,6 +64,7 @@ public class UsuarioService {
 		return userDTO;
 	}
 
+	@Transactional
 	public void removerUsuario(Long id) {
 		
 		Usuario usuarioBanco = retornaUsuario(id);

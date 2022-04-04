@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +26,7 @@ public class ContatoService {
 
 		if (cont == null) {
 			repositorio.save(contato);
-		} else {
+		} else if (cont.getEmail() == contato.getEmail()) {
 			throw new ServiceException("Contato já existe!");
 		}
 		return contato;
@@ -33,17 +35,6 @@ public class ContatoService {
 	public List<ContatoDTO> consultarContatos() {
 		List<Contato> contatos = repositorio.findAll();
 		return contatos.stream().map(c -> new ContatoDTO(c)).collect(Collectors.toList());
-	}
-
-	public void removerContato(Long id) {
-
-		Contato contato = retornaContato(id);
-
-		if (contato != null) {
-			repositorio.delete(contato);
-		} else {
-			throw new ServiceException("Contato não existe!");
-		}
 	}
 
 	public ContatoDTO atualizarContato(Contato contato) {
@@ -68,6 +59,18 @@ public class ContatoService {
 
 			return contatodto;
 
+		}
+	}
+	
+	@Transactional
+	public void removerContato(Long id) {
+
+		Contato contato = retornaContato(id);
+
+		if (contato != null) {
+			repositorio.delete(contato);
+		} else {
+			throw new ServiceException("Contato não existe!");
 		}
 	}
 

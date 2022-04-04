@@ -24,7 +24,7 @@ public class Usuario {
 	@NotBlank
 	private String sobrenome;
 
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	@NotBlank
 	private String email;
 

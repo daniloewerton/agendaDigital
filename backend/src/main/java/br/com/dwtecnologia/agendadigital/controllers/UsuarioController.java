@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,33 +30,38 @@ public class UsuarioController {
 	private UsuarioService usuarioService;
 
 	@PostMapping(path = "/registrarUsuario")
-	public ResponseEntity<UsuarioDTO> registrarUsuario(@Valid @RequestBody UsuarioInsertDTO user) {
+	public ResponseEntity<Object> registrarUsuario(@Valid @RequestBody UsuarioInsertDTO user) {
 		try {
 			UsuarioDTO usuario = usuarioService.inserirUsuario(user);
-			return ResponseEntity.ok(usuario);
-		} catch (ServiceException e) {
-			return ResponseEntity.unprocessableEntity().build();
+			return ResponseEntity.status(HttpStatus.OK).body(usuario);
+		} catch (ServiceException exception) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
 		}
 	}
 
 	@GetMapping("/consultarUsuario")
-	public List<UsuarioDTO> consultarUsuarios() {
-		List<UsuarioDTO> usuario = usuarioService.listaUsuario();
-		return usuario;
+	public ResponseEntity<List<UsuarioDTO>> consultarUsuarios() {
+		List<UsuarioDTO> usuarios = usuarioService.listaUsuario();
+		return ResponseEntity.status(HttpStatus.OK).body(usuarios);
 	}
 
-	@PutMapping("/atualizarUsuario")
-	public ResponseEntity<UsuarioDTO> atualizarUsuario(Usuario usuario) {
+	@PutMapping("/atualizarUsuario/{id}")
+	public ResponseEntity<Object> atualizarUsuario(@RequestBody Usuario usuario, @PathVariable Long id) {
 		try {
 			UsuarioDTO user = usuarioService.atualizarUsuario(usuario);
-			return ResponseEntity.ok(user);
-		} catch (ServiceException e) {
-			return ResponseEntity.unprocessableEntity().build();
+			return ResponseEntity.status(HttpStatus.OK).body(user);
+		} catch (ServiceException exception) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
 		}
 	}
 
 	@DeleteMapping("/removerUsuario/{id}")
-	public void removeUsuario(@PathVariable Long id) {
-		usuarioService.removerUsuario(id);
+	public ResponseEntity<Object> removeUsuario(@PathVariable Long id) {
+		try {
+			usuarioService.removerUsuario(id);
+			return ResponseEntity.status(HttpStatus.OK).body("Usuário removido!");
+		} catch (ServiceException exception) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
+		}
 	}
 }

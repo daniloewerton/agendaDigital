@@ -26,11 +26,11 @@ public class ContatoDTO {
 	public ContatoDTO(Contato contato) {
 		this.id = contato.getId();
 		this.nome = contato.getNome();
-		this.sobrenome = contato.getNome();
+		this.sobrenome = contato.getSobrenome();
 		this.email = contato.getEmail();
 		this.numeros = contato.getNumeros();
 		// this.usuario = contato.getUsuario(); No retorno, não será possível saber a
-		// qual usuário os contatos esão vinculados.
+		// qual usuário os contatos estão vinculados.
 	}
 
 	public ContatoDTO(Long id, String nome, String sobrenome, String email, List<Numero> numeros, UsuarioDTO usuario) {
