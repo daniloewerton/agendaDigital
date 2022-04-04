@@ -32,7 +32,7 @@ public class ContatoController {
 	public ResponseEntity<Object> registrarContato(@Valid @RequestBody Contato contato) {
 		try {
 			contatoService.registrarContato(contato);
-			return ResponseEntity.status(HttpStatus.OK).body(contato);
+			return ResponseEntity.status(HttpStatus.CREATED).body(contato);
 		} catch (ServiceException exception) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
 		}

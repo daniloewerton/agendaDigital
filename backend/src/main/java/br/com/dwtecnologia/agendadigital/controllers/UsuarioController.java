@@ -33,15 +33,19 @@ public class UsuarioController {
 	public ResponseEntity<Object> registrarUsuario(@Valid @RequestBody UsuarioInsertDTO user) {
 		try {
 			UsuarioDTO usuario = usuarioService.inserirUsuario(user);
-			return ResponseEntity.status(HttpStatus.OK).body(usuario);
+			return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
 		} catch (ServiceException exception) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
 		}
 	}
 
 	@GetMapping("/consultarUsuario")
-	public ResponseEntity<List<UsuarioDTO>> consultarUsuarios() {
+	public ResponseEntity<Object> consultarUsuarios() {
 		List<UsuarioDTO> usuarios = usuarioService.listaUsuario();
+		
+		if (usuarios.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Não há contatos cadastrados!");
+		}
 		return ResponseEntity.status(HttpStatus.OK).body(usuarios);
 	}
 
@@ -65,3 +69,4 @@ public class UsuarioController {
 		}
 	}
 }
+
