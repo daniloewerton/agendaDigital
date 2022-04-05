@@ -1,20 +1,9 @@
-package br.com.dwtecnologia.agendadigital.entities;
+package br.com.dwtecnologia.agendadigital.dto;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import br.com.dwtecnologia.agendadigital.entities.Endereco;
 
-@Entity
-@Table(name = "tb_endereco")
-public class Endereco {
+public class EnderecoDTO {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String rua;
 	private int numero;
@@ -23,20 +12,39 @@ public class Endereco {
 	private String cep;
 	private String cidade;
 	private String uf;
-	
-	@NotNull
-	@ManyToOne
-	@JoinColumn(name = "contato_id")
-	private Contato contato;
 
-	public Endereco() {
+	public EnderecoDTO() {
 
 	}
-	
+
+	public EnderecoDTO(Long id, String rua, int numero, String complemento, String bairro, String cep, String cidade,
+			String uf) {
+		super();
+		this.id = id;
+		this.rua = rua;
+		this.numero = numero;
+		this.complemento = complemento;
+		this.bairro = bairro;
+		this.cep = cep;
+		this.cidade = cidade;
+		this.uf = uf;
+	}
+
+	public EnderecoDTO(Endereco end) {
+		this.id = end.getId();
+		this.rua = end.getRua();
+		this.numero = end.getNumero();
+		this.complemento = end.getComplemento();
+		this.bairro = end.getBairro();
+		this.cep = end.getCep();
+		this.cidade = end.getCidade();
+		this.uf = end.getUf();
+	}
+
 	public Long getId() {
 		return id;
 	}
-	
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -95,13 +103,5 @@ public class Endereco {
 
 	public void setUf(String uf) {
 		this.uf = uf;
-	}
-
-	public Contato getContato() {
-		return contato;
-	}
-
-	public void setContato(Contato contato) {
-		this.contato = contato;
 	}
 }

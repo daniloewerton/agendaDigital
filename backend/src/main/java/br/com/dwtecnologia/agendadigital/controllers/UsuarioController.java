@@ -44,7 +44,7 @@ public class UsuarioController {
 		List<UsuarioDTO> usuarios = usuarioService.listaUsuario();
 		
 		if (usuarios.isEmpty()) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Não há contatos cadastrados!");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não há contatos cadastrados!");
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(usuarios);
 	}
@@ -65,8 +65,7 @@ public class UsuarioController {
 			usuarioService.removerUsuario(id);
 			return ResponseEntity.status(HttpStatus.OK).body("Usuário removido!");
 		} catch (ServiceException exception) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
 		}
 	}
 }
-

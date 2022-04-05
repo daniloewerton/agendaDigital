@@ -43,7 +43,7 @@ public class ContatoController {
 		List<ContatoDTO> contatos = contatoService.consultarContatos();
 
 		if (contatos.isEmpty()) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Nenhum contato cadastrado");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Nenhum contato cadastrado");
 		}
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(contatos);
 	}
@@ -64,7 +64,7 @@ public class ContatoController {
 			contatoService.removerContato(id);
 			return ResponseEntity.status(HttpStatus.OK).body("Contato removido!");
 		} catch (ServiceException exception) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
 		}
 	}
 }

@@ -47,6 +47,7 @@ public class UsuarioService {
 
 	public UsuarioDTO atualizarUsuario(Usuario usuario) {
 
+		//TRATAR POSSÍVEL EXCESSÃO
 		Usuario usuarioBanco = retornaUsuario(usuario);
 
 		if (usuarioBanco == null) {
