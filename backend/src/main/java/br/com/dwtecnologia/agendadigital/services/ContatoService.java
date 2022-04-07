@@ -20,7 +20,7 @@ public class ContatoService {
 	@Autowired
 	private ContatoRepository repositorio;
 
-	public Contato registrarContato(Contato contato) {
+	public ContatoDTO registrarContato(Contato contato) {
 
 		Contato cont = retornaContato(contato);
 
@@ -29,12 +29,22 @@ public class ContatoService {
 		} else if (cont.getEmail() == contato.getEmail()) {
 			throw new ServiceException("Contato já existe!");
 		}
-		return contato;
+		return new ContatoDTO(contato);
 	}
 
-	public List<ContatoDTO> consultarContatos() {
-		List<Contato> contatos = repositorio.findAll();
-		return contatos.stream().map(c -> new ContatoDTO(c)).collect(Collectors.toList());
+	public List<ContatoDTO> consultarContatos(Long id) {
+		
+		try {
+			List<Contato> contatos = repositorio.buscarContato(id);
+			
+			if (!contatos.isEmpty()) {
+				return contatos.stream().map(c -> new ContatoDTO(c)).collect(Collectors.toList());
+			} else {
+				throw new ServiceException("Usuário inexistente!");
+			}
+		} catch (ServiceException exception) {
+			throw new ServiceException("Usuário informado não existe ou não possui contatos cadastrados!");
+		}
 	}
 
 	public ContatoDTO atualizarContato(Contato contato) {
@@ -58,7 +68,6 @@ public class ContatoService {
 			repositorio.save(contatoAtualizado);
 
 			return contatodto;
-
 		}
 	}
 	

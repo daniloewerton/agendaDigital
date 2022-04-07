@@ -31,7 +31,12 @@ public class NumeroService {
 		
 		try {
 			numeros = repositorio.buscarNumeroPorContato(id);
-			return numeros.stream().map(n -> new NumeroDTO(n)).collect(Collectors.toList());
+			
+			if (!numeros.isEmpty()) {
+				return numeros.stream().map(n -> new NumeroDTO(n)).collect(Collectors.toList());
+			} else {
+				throw new ServiceException("Nenhum número cadastrado!");
+			}
 		} catch (Exception exception) {
 			throw new ServiceException("Nenhum número cadastrado!");
 		}

@@ -15,10 +15,6 @@ public class ContatoDTO {
 
 	private String email;
 
-	List<Numero> numeros;
-
-	private UsuarioDTO usuario;
-
 	public ContatoDTO() {
 
 	}
@@ -28,9 +24,6 @@ public class ContatoDTO {
 		this.nome = contato.getNome();
 		this.sobrenome = contato.getSobrenome();
 		this.email = contato.getEmail();
-		//this.numeros = contato.getNumeros();
-		// this.usuario = contato.getUsuario(); No retorno, não será possível saber a
-		// qual usuário os contatos estão vinculados.
 	}
 
 	public ContatoDTO(Long id, String nome, String sobrenome, String email, List<Numero> numeros, UsuarioDTO usuario) {
@@ -39,8 +32,6 @@ public class ContatoDTO {
 		this.nome = nome;
 		this.sobrenome = sobrenome;
 		this.email = email;
-		this.numeros = numeros;
-		this.usuario = usuario;
 	}
 
 	public Long getId() {
@@ -73,21 +64,5 @@ public class ContatoDTO {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public List<Numero> getNumeros() {
-		return numeros;
-	}
-
-	public void setNumeros(List<Numero> numeros) {
-		this.numeros = numeros;
-	}
-
-	public UsuarioDTO getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(UsuarioDTO usuario) {
-		this.usuario = usuario;
 	}
 }

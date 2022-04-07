@@ -45,7 +45,6 @@ public class Contato {
 		this.nome = nome;
 		this.sobrenome = sobrenome;
 		this.email = email;
-		//this.numeros = numeros;
 		this.usuario = usuario;
 	}
 
@@ -88,12 +87,4 @@ public class Contato {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-	/*public List<Numero> getNumeros() {
-		return numeros;
-	}
-
-	public void setNumeros(List<Numero> numeros) {
-		this.numeros = numeros;
-	}*/
 }
