@@ -29,8 +29,8 @@ public class Contato {
 	private String email;
 	
 	@OneToMany
-	@JoinColumn(name = "id_contato")
-	List<Numero> numeros;
+	//@JoinColumn(name = "id_contato")
+	//List<Numero> numeros;
 
 	@NotNull
 	@ManyToOne
@@ -45,7 +45,7 @@ public class Contato {
 		this.nome = nome;
 		this.sobrenome = sobrenome;
 		this.email = email;
-		this.numeros = numeros;
+		//this.numeros = numeros;
 		this.usuario = usuario;
 	}
 
@@ -89,11 +89,11 @@ public class Contato {
 		this.email = email;
 	}
 
-	public List<Numero> getNumeros() {
+	/*public List<Numero> getNumeros() {
 		return numeros;
 	}
 
 	public void setNumeros(List<Numero> numeros) {
 		this.numeros = numeros;
-	}
+	}*/
 }

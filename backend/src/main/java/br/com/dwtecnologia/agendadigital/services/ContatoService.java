@@ -50,7 +50,7 @@ public class ContatoService {
 			contatoAtualizado.setNome(contato.getNome());
 			contatoAtualizado.setEmail(contato.getEmail());
 			contatoAtualizado.setSobrenome(contato.getSobrenome());
-			contatoAtualizado.setNumeros(contato.getNumeros());
+			//contatoAtualizado.setNumeros(contato.getNumeros());
 			contatoAtualizado.setUsuario(contato.getUsuario());
 
 			ContatoDTO contatodto = new ContatoDTO(contatoAtualizado);

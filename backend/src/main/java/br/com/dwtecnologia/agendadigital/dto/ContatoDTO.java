@@ -28,7 +28,7 @@ public class ContatoDTO {
 		this.nome = contato.getNome();
 		this.sobrenome = contato.getSobrenome();
 		this.email = contato.getEmail();
-		this.numeros = contato.getNumeros();
+		//this.numeros = contato.getNumeros();
 		// this.usuario = contato.getUsuario(); No retorno, não será possível saber a
 		// qual usuário os contatos estão vinculados.
 	}

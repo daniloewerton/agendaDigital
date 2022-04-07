@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -75,6 +77,7 @@ public class EnderecoService {
 		return enderecoDoContato;
 	}
 
+	@Transactional
 	public void removerEndereco(Long id) {
 		Endereco end = retornaEndereco(id);
 		
@@ -102,9 +105,13 @@ public class EnderecoService {
 		return end;
 	}
 
+	/**
+	 * Retorna um objeto do tipo Endereco.
+	 * @param id Rece um ID para verificação se o mesmo já existe no banco de dados.
+	 * @return Retorna o endereço, caso encontrado.
+	 */
 	public Endereco retornaEndereco(Long id) {
 		Endereco end = null;
-
 		try {
 			end = repositorio.findById(id).get();
 		} catch (NoSuchElementException exception) {
