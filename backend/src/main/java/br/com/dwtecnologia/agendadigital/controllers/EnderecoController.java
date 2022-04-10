@@ -29,27 +29,21 @@ public class EnderecoController {
 	@PostMapping("/registrarEndereco")
 	public ResponseEntity<Object> registrarEndereco(@RequestBody Endereco endereco) {
 		try {
-			Endereco end = enderecoService.inserirEndereco(endereco);
+			EnderecoDTO end = enderecoService.inserirEndereco(endereco);
 			return ResponseEntity.status(HttpStatus.CREATED).body(end);
 		} catch (ServiceException exception) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
 		}
 	}
 
-	/**
-	 * Retorna a lista de endereços de um determinado contato.
-	 * 
-	 * @param id Deve ser informado o ID do contato para iniciar a busca.
-	 * @return Retorna lista de endereços cadastrados para um contato, se existir.
-	 */
 	@GetMapping("/consultaEndereco/{id}")
 	public ResponseEntity<Object> consultarEndereco(@PathVariable Long id) {
 		try {
-			List<Endereco> lista = enderecoService.listaEndereco(id);
+			List<EnderecoDTO> lista = enderecoService.listaEndereco(id);
 
 			if (lista.isEmpty()) {
 				return ResponseEntity.status(HttpStatus.NOT_FOUND)
-						.body("O contato informado não possui endereços cadastrados!");
+						.body("O contato informado não existe ou não possui endereços cadastrados!");
 			}
 			return ResponseEntity.status(HttpStatus.OK).body(lista);
 		} catch (ServiceException exception) {

@@ -20,16 +20,18 @@ public class ContatoService {
 	@Autowired
 	private ContatoRepository repositorio;
 
-	public ContatoDTO registrarContato(Contato contato) {
+	public ContatoDTO registrarContato(Contato objContato) {
 
-		Contato cont = retornaContato(contato);
-
-		if (cont == null) {
-			repositorio.save(contato);
-		} else if (cont.getEmail() == contato.getEmail()) {
-			throw new ServiceException("Contato já existe!");
+		List<Contato> cont = retornaContato(objContato.getEmail());
+		
+		for (Contato contato : cont) {
+			if (contato == null) {
+				repositorio.save(objContato);
+			} else if (contato.getUsuario().getId().equals(objContato.getUsuario().getId())) {
+				throw new ServiceException("Usuário já possui esse contato!");
+			}
 		}
-		return new ContatoDTO(contato);
+		return new ContatoDTO(repositorio.save(objContato));
 	}
 
 	public List<ContatoDTO> consultarContatos(Long id) {
@@ -47,9 +49,9 @@ public class ContatoService {
 		}
 	}
 
-	public ContatoDTO atualizarContato(Contato contato) {
+	public ContatoDTO atualizarContato(Contato contato, Long id) {
 
-		Contato cont = retornaContato(contato);
+		Contato cont = retornaContatoPorUsuario(contato ,id);
 
 		if (cont == null) {
 			throw new ServiceException("Contato não existe!");
@@ -60,7 +62,6 @@ public class ContatoService {
 			contatoAtualizado.setNome(contato.getNome());
 			contatoAtualizado.setEmail(contato.getEmail());
 			contatoAtualizado.setSobrenome(contato.getSobrenome());
-			//contatoAtualizado.setNumeros(contato.getNumeros());
 			contatoAtualizado.setUsuario(contato.getUsuario());
 
 			ContatoDTO contatodto = new ContatoDTO(contatoAtualizado);
@@ -83,10 +84,10 @@ public class ContatoService {
 		}
 	}
 
-	public Contato retornaContato(Contato contato) {
+	public Contato retornaContatoPorUsuario(Contato contato, Long id) {
 		Contato contatoBanco;
 		try {
-			contatoBanco = repositorio.findById(contato.getId()).get();
+			contatoBanco = repositorio.findContatoByUsuarioID(contato.getId(), id);
 		} catch (Exception exception) {
 			contatoBanco = null;
 		}
@@ -98,6 +99,16 @@ public class ContatoService {
 		try {
 			contatoBanco = repositorio.findById(id).get();
 		} catch (NoSuchElementException exception) {
+			contatoBanco = null;
+		}
+		return contatoBanco;
+	}
+	
+	public List<Contato> retornaContato(String email) {
+		List<Contato> contatoBanco;
+		try {
+			contatoBanco = repositorio.findByEmail(email);
+		} catch (Exception exception) {
 			contatoBanco = null;
 		}
 		return contatoBanco;

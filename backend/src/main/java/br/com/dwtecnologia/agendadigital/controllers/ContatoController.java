@@ -51,10 +51,16 @@ public class ContatoController {
 		}
 	}
 
+	/**
+	 * Altera um contato de um usuário informado.
+	 * @param contato Deverá ser informado os dados do contato.
+	 * @param id Deverá ser informado o ID do usuário.
+	 * @return
+	 */
 	@PutMapping("/atualizarContato/{id}")
 	public ResponseEntity<Object> atualizarContato(@RequestBody Contato contato, @PathVariable Long id) {
 		try {
-			ContatoDTO cont = contatoService.atualizarContato(contato);
+			ContatoDTO cont = contatoService.atualizarContato(contato, id);
 			return ResponseEntity.status(HttpStatus.OK).body(cont);
 		} catch (ServiceException exception) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());

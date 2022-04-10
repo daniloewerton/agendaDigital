@@ -2,7 +2,6 @@ package br.com.dwtecnologia.agendadigital.entities;
 
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,7 +24,6 @@ public class Contato {
 
 	private String sobrenome;
 
-	@Column(unique = true)
 	private String email;
 	
 	@OneToMany

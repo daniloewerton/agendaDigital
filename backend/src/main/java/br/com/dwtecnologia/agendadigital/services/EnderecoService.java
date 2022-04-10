@@ -3,6 +3,7 @@ package br.com.dwtecnologia.agendadigital.services;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -25,8 +26,9 @@ public class EnderecoService {
 	@Autowired
 	private ContatoRepository contatoRepositorio;
 
-	public Endereco inserirEndereco(Endereco endereco) {
-		return repositorio.save(endereco);
+	public EnderecoDTO inserirEndereco(Endereco endereco) {
+		repositorio.save(endereco);
+		return new EnderecoDTO(endereco);
 	}
 
 	public EnderecoDTO atualizarEndereco(Endereco endereco) {
@@ -56,7 +58,13 @@ public class EnderecoService {
 		}
 	}
 
-	public List<Endereco> listaEndereco(Long id) {
+	/**
+	 * Retorna a lista de endereços de um determinado contato.
+	 * 
+	 * @param id Deve ser informado o ID do contato para iniciar a busca.
+	 * @return Retorna lista de endereços cadastrados para um contato, se existir.
+	 */
+	public List<EnderecoDTO> listaEndereco(Long id) {
 
 		Contato contato = null;
 
@@ -74,7 +82,7 @@ public class EnderecoService {
 				enderecoDoContato.add(lista);
 			}
 		}
-		return enderecoDoContato;
+		return enderecoDoContato.stream().map(e -> new EnderecoDTO(e)).collect(Collectors.toList());
 	}
 
 	@Transactional
@@ -107,7 +115,7 @@ public class EnderecoService {
 
 	/**
 	 * Retorna um objeto do tipo Endereco.
-	 * @param id Rece um ID para verificação se o mesmo já existe no banco de dados.
+	 * @param id Recebe um ID para verificação se o mesmo já existe no banco de dados.
 	 * @return Retorna o endereço, caso encontrado.
 	 */
 	public Endereco retornaEndereco(Long id) {
