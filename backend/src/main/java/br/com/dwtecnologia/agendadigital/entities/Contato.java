@@ -8,7 +8,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -26,10 +25,6 @@ public class Contato {
 
 	private String email;
 	
-	@OneToMany
-	//@JoinColumn(name = "id_contato")
-	//List<Numero> numeros;
-
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "usuario_id")

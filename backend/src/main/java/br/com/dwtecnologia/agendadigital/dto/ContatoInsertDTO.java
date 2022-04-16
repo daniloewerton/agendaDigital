@@ -1,8 +1,6 @@
 package br.com.dwtecnologia.agendadigital.dto;
 
-import br.com.dwtecnologia.agendadigital.entities.Usuario;
-
-public class UsuarioInsertDTO {
+public class ContatoInsertDTO {
 
 	private String nome;
 
@@ -10,25 +8,18 @@ public class UsuarioInsertDTO {
 
 	private String email;
 	
-	private String senha;
+	private Long id_usuario;
 	
-	public UsuarioInsertDTO() {
+	public ContatoInsertDTO() {
 		
 	}
-	
-	public UsuarioInsertDTO(Usuario usuario) {
-		this.nome = usuario.getNome();
-		this.sobrenome = usuario.getSobrenome();
-		this.email = usuario.getEmail();
-		this.senha = usuario.getSenha();
-	}
-	
-	public UsuarioInsertDTO(String nome, String sobrenome, String email, String senha) {
+
+	public ContatoInsertDTO(String nome, String sobrenome, String email, Long id_usuario) {
 		super();
 		this.nome = nome;
 		this.sobrenome = sobrenome;
 		this.email = email;
-		this.senha = senha;
+		this.id_usuario = id_usuario;
 	}
 
 	public String getNome() {
@@ -55,11 +46,11 @@ public class UsuarioInsertDTO {
 		this.email = email;
 	}
 
-	public String getSenha() {
-		return senha;
+	public Long getId_usuario() {
+		return id_usuario;
 	}
 
-	public void setSenha(String senha) {
-		this.senha = senha;
+	public void setId_usuario(Long id_usuario) {
+		this.id_usuario = id_usuario;
 	}
 }

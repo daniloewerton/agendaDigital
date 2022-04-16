@@ -38,6 +38,17 @@ public class UsuarioController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
 		}
 	}
+	
+	@GetMapping
+	public ResponseEntity<Object> autenticar(@RequestBody UsuarioInsertDTO user) {
+		
+		try {
+			UsuarioInsertDTO usuario = usuarioService.autenticar(user);
+			return ResponseEntity.status(HttpStatus.OK).body(usuario);
+		} catch (ServiceException exception) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
+		}
+	}
 
 	@GetMapping("/consultarUsuario")
 	public ResponseEntity<Object> consultarUsuarios() {
@@ -49,8 +60,8 @@ public class UsuarioController {
 		return ResponseEntity.status(HttpStatus.OK).body(usuarios);
 	}
 
-	@PutMapping("/atualizarUsuario/{id}")
-	public ResponseEntity<Object> atualizarUsuario(@RequestBody Usuario usuario, @PathVariable Long id) {
+	@PutMapping("/atualizarUsuario")
+	public ResponseEntity<Object> atualizarUsuario(@RequestBody Usuario usuario) {
 		try {
 			UsuarioDTO user = usuarioService.atualizarUsuario(usuario);
 			return ResponseEntity.status(HttpStatus.OK).body(user);

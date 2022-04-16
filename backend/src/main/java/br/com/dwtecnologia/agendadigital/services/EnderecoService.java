@@ -3,6 +3,7 @@ package br.com.dwtecnologia.agendadigital.services;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.dwtecnologia.agendadigital.dto.EnderecoDTO;
+import br.com.dwtecnologia.agendadigital.dto.EnderecoInsertDTO;
 import br.com.dwtecnologia.agendadigital.entities.Contato;
 import br.com.dwtecnologia.agendadigital.entities.Endereco;
 import br.com.dwtecnologia.agendadigital.exception.ServiceException;
@@ -26,36 +28,61 @@ public class EnderecoService {
 	@Autowired
 	private ContatoRepository contatoRepositorio;
 
-	public EnderecoDTO inserirEndereco(Endereco endereco) {
+	/**
+	 * Realiza a inserção de um endereço para um dado contato.
+	 * 
+	 * @param enderecoDto Deverá ser informado o objeto EnderecoDTO desejado.
+	 * @param id_contato  Deverá ser informado o ID do contato.
+	 * @return Retorna o objeto EnderecoDTO.
+	 */
+	@Transactional
+	public EnderecoDTO inserirEndereco(EnderecoInsertDTO enderecoDto, Long id_contato) {
+		Endereco endereco = converterEnderecoInsertDTOemEnderecoDTO(enderecoDto);
+
+		try {
+			Optional<Contato> contato = contatoRepositorio.findContatoById(id_contato);
+			endereco.setContato(contato.get());
+		} catch (Exception exception) {
+			throw new ServiceException("Contato não existente!");
+		}
+
 		repositorio.save(endereco);
 		return new EnderecoDTO(endereco);
 	}
 
-	public EnderecoDTO atualizarEndereco(Endereco endereco) {
+	/**
+	 * Realiza alteração em um Endereço já existente.
+	 * 
+	 * @param enderecoDto Deverá ser informado o objeto EnderecoDTO desejado.
+	 * @param id_contato  Deverá ser informado o ID do contato que possui tal
+	 *                    endereço.
+	 * @return Retorna o EnderecoDTO atualizado.
+	 */
+	@Transactional
+	public EnderecoDTO atualizarEndereco(EnderecoDTO enderecoDto, Long id_contato) {
 
-		Endereco enderecoBanco = retornaEndereco(endereco);
+		Optional<Endereco> enderecoBanco = repositorio.procurarEnderecoDeContatoById(enderecoDto.getId(), id_contato);
 
-		if (enderecoBanco == null) {
-			throw new ServiceException("Endereço não existente!");
-		} else {
-
-			Endereco enderecoAtualizado = new Endereco();
-			enderecoAtualizado.setId(endereco.getId());
-			enderecoAtualizado.setRua(endereco.getRua());
-			enderecoAtualizado.setBairro(endereco.getBairro());
-			enderecoAtualizado.setCidade(endereco.getCidade());
-			enderecoAtualizado.setComplemento(endereco.getComplemento());
-			enderecoAtualizado.setNumero(endereco.getNumero());
-			enderecoAtualizado.setUf(endereco.getUf());
-			enderecoAtualizado.setCep(endereco.getCep());
-			enderecoAtualizado.setContato(endereco.getContato());
-
-			repositorio.save(enderecoAtualizado);
-
-			EnderecoDTO end = new EnderecoDTO(enderecoAtualizado);
-
-			return end;
+		try {
+			enderecoBanco.get();
+		} catch (Exception exception) {
+			throw new ServiceException("Endereço ou contato não existente!");
 		}
+
+		Endereco enderecoAtualizado = new Endereco();
+		enderecoAtualizado.setId(enderecoDto.getId());
+		enderecoAtualizado.setRua(enderecoDto.getRua());
+		enderecoAtualizado.setBairro(enderecoDto.getBairro());
+		enderecoAtualizado.setCidade(enderecoDto.getCidade());
+		enderecoAtualizado.setComplemento(enderecoDto.getComplemento());
+		enderecoAtualizado.setNumero(enderecoDto.getNumero());
+		enderecoAtualizado.setUf(enderecoDto.getUf());
+		enderecoAtualizado.setCep(enderecoDto.getCep());
+		enderecoAtualizado.setContato(contatoRepositorio.findContatoById(id_contato).get());
+
+		repositorio.save(enderecoAtualizado);
+
+		return new EnderecoDTO(enderecoAtualizado);
 	}
 
 	/**
@@ -85,10 +112,15 @@ public class EnderecoService {
 		return enderecoDoContato.stream().map(e -> new EnderecoDTO(e)).collect(Collectors.toList());
 	}
 
+	/**
+	 * Remove um endereço.
+	 * 
+	 * @param id Deverá ser informado o ID do endereço desejado.
+	 */
 	@Transactional
 	public void removerEndereco(Long id) {
 		Endereco end = retornaEndereco(id);
-		
+
 		if (end != null) {
 			repositorio.delete(end);
 		} else {
@@ -97,7 +129,7 @@ public class EnderecoService {
 	}
 
 	/**
-	 * Retorna um objeto do tipo Endereço.
+	 * Realiza uma pesquisa no banco de dados e retorna um objeto do tipo Endereço.
 	 * 
 	 * @param endereco Recebe um endereço para verificação se o mesmo já existe no
 	 *                 banco de dados.
@@ -114,8 +146,10 @@ public class EnderecoService {
 	}
 
 	/**
-	 * Retorna um objeto do tipo Endereco.
-	 * @param id Recebe um ID para verificação se o mesmo já existe no banco de dados.
+	 * Realiza uma pesquisa no banco de dados e retorna um objeto do tipo Endereco.
+	 * 
+	 * @param id Recebe um ID para verificação se o mesmo já existe no banco de
+	 *           dados.
 	 * @return Retorna o endereço, caso encontrado.
 	 */
 	public Endereco retornaEndereco(Long id) {
@@ -126,5 +160,23 @@ public class EnderecoService {
 			throw new ServiceException("Endereço não existente!");
 		}
 		return end;
+	}
+
+	/**
+	 * Realiza a conversão de um objeto EnderecoInsertDTO em Endereco.
+	 * 
+	 * @param dto Deverá ser informado o EnderecoInsertDTO desejado.
+	 * @return Retorna o objeto Endereco.
+	 */
+	public Endereco converterEnderecoInsertDTOemEnderecoDTO(EnderecoInsertDTO dto) {
+		Endereco endereco = new Endereco();
+		endereco.setRua(dto.getRua());
+		endereco.setNumero(dto.getNumero());
+		endereco.setComplemento(dto.getComplemento());
+		endereco.setBairro(dto.getBairro());
+		endereco.setCep(dto.getCep());
+		endereco.setCidade(dto.getCidade());
+		endereco.setUf(dto.getUf());
+		return endereco;
 	}
 }

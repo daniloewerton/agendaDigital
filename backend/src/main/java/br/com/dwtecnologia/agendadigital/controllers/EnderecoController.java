@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.dwtecnologia.agendadigital.dto.EnderecoDTO;
-import br.com.dwtecnologia.agendadigital.entities.Endereco;
+import br.com.dwtecnologia.agendadigital.dto.EnderecoInsertDTO;
 import br.com.dwtecnologia.agendadigital.exception.ServiceException;
 import br.com.dwtecnologia.agendadigital.services.EnderecoService;
 
@@ -26,10 +26,10 @@ public class EnderecoController {
 	@Autowired
 	private EnderecoService enderecoService;
 
-	@PostMapping("/registrarEndereco")
-	public ResponseEntity<Object> registrarEndereco(@RequestBody Endereco endereco) {
+	@PostMapping("/registrarEndereco/{id}")
+	public ResponseEntity<Object> registrarEndereco(@RequestBody EnderecoInsertDTO endereco, @PathVariable("id") Long id_contato) {
 		try {
-			EnderecoDTO end = enderecoService.inserirEndereco(endereco);
+			EnderecoDTO end = enderecoService.inserirEndereco(endereco, id_contato);
 			return ResponseEntity.status(HttpStatus.CREATED).body(end);
 		} catch (ServiceException exception) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
@@ -51,10 +51,10 @@ public class EnderecoController {
 		}
 	}
 
-	@PutMapping("/alterarEndereco")
-	public ResponseEntity<Object> atualizarEndereco(@RequestBody Endereco endereco) {
+	@PutMapping("/alterarEndereco/{id}")
+	public ResponseEntity<Object> atualizarEndereco(@RequestBody EnderecoDTO endereco, @PathVariable(value = "id") Long id_contato) {
 		try {
-			EnderecoDTO end = enderecoService.atualizarEndereco(endereco);
+			EnderecoDTO end = enderecoService.atualizarEndereco(endereco, id_contato);
 			return ResponseEntity.status(HttpStatus.OK).body(end);
 		} catch (ServiceException exception) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());

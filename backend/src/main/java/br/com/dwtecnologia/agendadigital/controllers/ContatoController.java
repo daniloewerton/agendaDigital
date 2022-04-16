@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.dwtecnologia.agendadigital.dto.ContatoDTO;
-import br.com.dwtecnologia.agendadigital.entities.Contato;
+import br.com.dwtecnologia.agendadigital.dto.ContatoInsertDTO;
 import br.com.dwtecnologia.agendadigital.exception.ServiceException;
 import br.com.dwtecnologia.agendadigital.services.ContatoService;
 
@@ -28,7 +28,7 @@ public class ContatoController {
 	private ContatoService contatoService;
 
 	@PostMapping("/registrarContato")
-	public ResponseEntity<Object> registrarContato(@Valid @RequestBody Contato contato) {
+	public ResponseEntity<Object> registrarContato(@Valid @RequestBody ContatoInsertDTO contato) {
 		try {
 			return ResponseEntity.status(HttpStatus.CREATED).body(contatoService.registrarContato(contato));
 		} catch (ServiceException exception) {
@@ -58,9 +58,9 @@ public class ContatoController {
 	 * @return
 	 */
 	@PutMapping("/atualizarContato/{id}")
-	public ResponseEntity<Object> atualizarContato(@RequestBody Contato contato, @PathVariable Long id) {
+	public ResponseEntity<Object> atualizarContato(@RequestBody ContatoDTO contatoDto, @PathVariable Long id) {
 		try {
-			ContatoDTO cont = contatoService.atualizarContato(contato, id);
+			ContatoDTO cont = contatoService.atualizarContato(contatoDto, id);
 			return ResponseEntity.status(HttpStatus.OK).body(cont);
 		} catch (ServiceException exception) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());

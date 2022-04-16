@@ -1,21 +1,9 @@
-package br.com.dwtecnologia.agendadigital.entities;
+package br.com.dwtecnologia.agendadigital.dto;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import br.com.dwtecnologia.agendadigital.entities.Contato;
 
-@Entity
-@Table(name = "tb_endereco")
-public class Endereco {
+public class EnderecoInsertDTO {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
 	private String rua;
 	private int numero;
 	private String complemento;
@@ -23,22 +11,23 @@ public class Endereco {
 	private String cep;
 	private String cidade;
 	private String uf;
-
-	@NotNull
-	@ManyToOne
-	@JoinColumn(name = "contato_id")
 	private Contato contato;
 
-	public Endereco() {
+	public EnderecoInsertDTO() {
 
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
+	public EnderecoInsertDTO(String rua, int numero, String complemento, String bairro, String cep, String cidade,
+			String uf, Contato contato) {
+		super();
+		this.rua = rua;
+		this.numero = numero;
+		this.complemento = complemento;
+		this.bairro = bairro;
+		this.cep = cep;
+		this.cidade = cidade;
+		this.uf = uf;
+		this.contato = contato;
 	}
 
 	public String getRua() {
