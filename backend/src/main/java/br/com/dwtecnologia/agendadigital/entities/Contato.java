@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "tb_contatos", schema = "agendaDigital")
+@Table(name = "tb_contatos")
 public class Contato {
 
 	@Id
