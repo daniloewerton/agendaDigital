@@ -49,7 +49,7 @@
 * <code>/atualizarUsuario - </code> Método PUT: Atualiza os dados de um usuário previamente cadastrado informando seu número de ID:
 
 ~~~
-	{
+    }
         "id": 1,
         "nome": "Danilo Ewerton",
         "sobrenome": "Pereira Freire",
