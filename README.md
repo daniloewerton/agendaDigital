@@ -112,7 +112,7 @@
 
 * <code>/consultaEndereco/{id}</code> - Método GET: Consulta endereço de um contato previamente cadastrado informando seu número de ID na URL.
 
-* <code>/alterarEndereco/{id} - </code> Método PUT: Altera um endereço de um contato previamente cadastrado informando os dados do endereço no corpo da requisição, e o número de ID do contato na URL.
+* <code>/alterarEndereco/{id}</code> - Método PUT: Altera um endereço de um contato previamente cadastrado informando os dados do endereço no corpo da requisição, e o número de ID do contato na URL.
 
 ~~~
     {
