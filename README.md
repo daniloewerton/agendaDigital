@@ -16,7 +16,7 @@
 
 * Repositories: Classes que conectam a aplicação ao banco de dados;
 
-* Services: Classes que representam as regras de negócio da aplicação.
+* Services: Classes que representam as regras de negócio da aplicação, e fornecem respostas aos controladores.
 
 <h2>Pasta Resources</h2>
 
