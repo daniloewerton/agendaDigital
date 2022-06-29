@@ -33,7 +33,7 @@
 <h3>Endereço Raíz: /usuario</h3>
 <br>
 
-* <code>/registrarUsuario - </code> Método POST: Cadastra um novo cliente usando os campos adequados conforme exemplo abaixo:
+* <code>/registrarUsuario</code> - Método POST: Cadastra um novo cliente usando os campos adequados conforme exemplo abaixo:
 
 ~~~
     {
@@ -44,9 +44,9 @@
     }
 ~~~
 
-* <code>/consultarUsuario - </code> Método GET: Lista todos os usuários cadastrados na aplicação.
+* <code>/consultarUsuario</code> - Método GET: Lista todos os usuários cadastrados na aplicação.
 
-* <code>/atualizarUsuario - </code> Método PUT: Atualiza os dados de um usuário previamente cadastrado informando seu número de ID:
+* <code>/atualizarUsuario</code> - Método PUT: Atualiza os dados de um usuário previamente cadastrado informando seu número de ID:
 
 ~~~
     }
@@ -78,7 +78,7 @@
 
 * <code>/consultarContato/?id_usuario=numeroId</code> - Método GET: Consulta os contatos de um usuário informando o ID do usuário através da URL.
 
-* <code>/atualizarContato/{id} - </code> Método PUT: Atualiza os dados de um contato previamente cadastrado informando os seus dados atualizados no corpo da requisição, e o ID do usuário através da URL.
+* <code>/atualizarContato/{id}</code> - Método PUT: Atualiza os dados de um contato previamente cadastrado informando os seus dados atualizados no corpo da requisição, e o ID do usuário através da URL.
 
 ~~~
     {
