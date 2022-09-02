@@ -4,6 +4,12 @@
 
 <p>API criada para estudo de boas práticas. Link do deploy: https://agendadigitaldw.herokuapp.com/</p>
 
+
+
+https://user-images.githubusercontent.com/76541826/188153145-fb7eb3bb-e50b-470e-bee9-a37617c1e66c.mp4
+
+
+
 <h1>Estrutura dos diretórios e classes</h1>
 
 * Controllers: Endpoints dispóníveis para utilização das funcionalidades da API;
